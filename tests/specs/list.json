@@ -1,19 +1,12 @@
 [
   {
-    "name": "/list",
+    "name": "/list shows empty state when no alerts exist",
     "steps": [
       {
+        "send": { "text": "/list" },
         "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Show a list of active alerts with management options"
-            }
-          }
-        ],
-        "send": {
-          "text": "/list"
-        }
+          { "method": "sendMessage", "payload": { "text": "No alerts yet — tap ➕ Add alert to create one." } }
+        ]
       }
     ]
   }

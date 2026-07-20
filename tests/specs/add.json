@@ -1,19 +1,59 @@
 [
   {
-    "name": "/add",
+    "name": "/add flow creates an alert through the full wizard",
     "steps": [
       {
+        "send": { "text": "/add" },
         "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Start the flow to create a new price alert"
-            }
-          }
-        ],
-        "send": {
-          "text": "/add"
-        }
+          { "method": "sendMessage", "payload": { "text": "Which currency pair?\n\nSend it in standard format, e.g. EURUSD or GBPJPY." } }
+        ]
+      },
+      {
+        "send": { "text": "EURUSD" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "Should I alert you when the price goes above or below your target?" } }
+        ]
+      },
+      {
+        "send": { "callback": "add:dir:above" },
+        "expect": [
+          { "method": "editMessageText", "payload": { "text": "Got it — alert when EURUSD goes above a target price.\n\nWhat price?" } }
+        ]
+      },
+      {
+        "send": { "text": "1.0850" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "Confirm your alert:\n\nPair: EURUSD\nDirection: above 1.0850\n\nTap Create to activate, or Cancel to abort." } }
+        ]
+      },
+      {
+        "send": { "callback": "add:confirm:yes" },
+        "expect": [
+          { "method": "editMessageText" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "/add flow cancels when user taps Cancel",
+    "steps": [
+      {
+        "send": { "text": "/add" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "Which currency pair?\n\nSend it in standard format, e.g. EURUSD or GBPJPY." } }
+        ]
+      },
+      {
+        "send": { "text": "EURUSD" },
+        "expect": [
+          { "method": "sendMessage", "payload": { "text": "Should I alert you when the price goes above or below your target?" } }
+        ]
+      },
+      {
+        "send": { "callback": "add:cancel" },
+        "expect": [
+          { "method": "editMessageText", "payload": { "text": "Alert creation cancelled." } }
+        ]
       }
     ]
   }
