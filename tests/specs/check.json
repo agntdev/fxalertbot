@@ -1,0 +1,13 @@
+[
+  {
+    "name": "price check prompts for a currency pair",
+    "steps": [
+      {
+        "send": { "callback": "check:price" },
+        "expect": [
+          { "method": "editMessageText", "payload": { "text": "Which currency pair? Send it in standard format, e.g. EURUSD." } }
+        ]
+      }
+    ]
+  }
+]
